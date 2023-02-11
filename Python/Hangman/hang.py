@@ -15,6 +15,7 @@ def hangman():
     #word_letters - letters for word
     #word_list - Dashes
 
+    lives = 6
     word = get_valid_word(words)
     print(word)
     word_letters = set(word.lower()) # letters in the word
@@ -22,7 +23,7 @@ def hangman():
     used_letters = set() # what the user has guess
    
     # getting user input
-    while len(word_letters) > 0:
+    while len(word_letters) > 0 and lives > 0:
         # letters used
         # ' ' .join['a', 'b', 'cd'] ---> 'a b cd"
         print('You have used these letters: ', ' '.join(used_letters))
@@ -38,11 +39,20 @@ def hangman():
             if user_letter in word_letters:
                 word_letters.remove(user_letter)
 
+            else:
+                lives = lives - 1
+                print("Letter is not in word.")
+
         elif user_letter in used_letters:
             print('You already guessed this letter. Please try again.')
 
         else:
             print('Invalid character. Please try again.')
+
+    if lives == 0:
+        print('You died, sorry. The word was', word)
+    else:
+        print("You guessed the word,", word, '!!')
         
     # gets here when len(word_letters) == 0
 
